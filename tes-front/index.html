@@ -1,10 +1,52 @@
-<html>
- <body onload="draw();">
-   <canvas id="canvas" width="150" height="150"></canvas>
-   <div style="display:none;">
-     <img id="source" src="https://mdn.mozillademos.org/files/5397/rhino.jpg" width="300" height="227">
-     <img id="frame" src="https://mdn.mozillademos.org/files/242/Canvas_picture_frame.png" width="132" height="150">
-   </div>
- </body>
- <script type="text/javascript" src="/index.js"></script>
+<!DOCTYPE html>
+  <head><title>Placeholder title</title>
+    <script type="text/javascript" src="/index.js"></script>
+	</head>
+
+	<body onload="draw();"
+            <!-- cards rendered on page but will be opque, and pushed to back -->
+
+			<canvas id=“canvas” width=“150" height=“150”></canvas>
+			<div style=“display:none;“>
+			  <img id=“source” src=“https://cdn1.imggmi.com/uploads/2019/9/11/8afd7cf21d6551f71409919734470e16-full.png” width=“300” height=“227">
+			</div>
+
+        <div class="top_header">
+		<!-- insert new user, sign in, stats here -->
+        </div>
+
+    <div id="game-controls">
+		<div id="menu" class= "sideBar">
+			<a class="newButton" id="newGame"></a><span>New Game</span></a>
+			<a id= "setCount"></a><span>Sets:</span>
+			<a id= "setCounter"></a><span>${setCount}</span>
+		<!-- the above setCount incompelete in js -->
+			<a id= "time"></a><span>Time:</span>
+		<!-- the above timerEvent incompelete in js (also a stretch goal) -->
+			<a id= "timeCounter"></a><span>${timerEvent}</span>
+
+		</div>
+	</div>
+    
+	<form class= "card-table" id="set_form">
+		<div class="grid-container" id= "grid-container">
+			<div class="card1" id="card1">{$cardIds}</div>
+				<img class= "card_img" src= "tbd">
+			<div class="card2" id="card2">{$cardIds}</div>
+			<div class="card3" id="card3">{$cardIds}</div>
+			<div class="card4" id="card4">{$cardIds}</div>
+			<div class="card5" id="card5">{$cardIds}</div>
+			<div class="card6" id="card6">{$cardIds}</div>
+			<div class="card7" id="card7">{$cardIds}</div>
+			<div class="card8" id="card8">{$cardIds}</div>
+			<div class="card9" id="card9">{$cardIds}</div>
+			<div class="card10" id="card10">{$cardIds}</div>
+			<div class="card11" id="card11">{$cardIds}</div>
+			<div class="card12" id="card12">{$cardIds}</div>
+		</div>
+		
+    </form>
+
+
+</body>
 </html>
