@@ -74,11 +74,7 @@ $(document).ready(function() {
 <div id="menu">
 <div class="buttonwrapper">
 <a class="boldbuttons fixed" href="/en/set/start"><span>New Game</span></a>
-	<a id="add_cards" class="boldbuttons fixed" href="/en/set/open_cards"><span>Open 3 Cards</span></a>
-<a class="boldbuttons fixed" href="/en/set/find_set"><span>Find Set</span></a>
-</div>
-<p>
-<span>Cards in deck:</span> 69<p>
+	<a id="add_cards" class="boldbuttons fixed" href="/en/set/open_cards"><span>Reset Board</span></a>
 
 Game duration: <span id="duration">21</span> sec<p>
 Sets found: 0<p>
@@ -88,7 +84,7 @@ Last set:
 
 </div>
     
-<form method="post" name="set_form" id="set_form" action="/en/set/submit_set">
+<form method="post" class= "card-table" name="set_form" id="set_form" action="/en/set/submit_set">
 	<table id="board" border="0" class="">
 
         <tr>
@@ -239,52 +235,7 @@ Last set:
 <div style="clear: both"></div></div>
 </div>
 
-<div class="counters">
-    
-    <!--LiveInternet counter--><script type="text/javascript">
-    document.write("<a href='//www.liveinternet.ru/click' "+
-    "target=_blank><img src='//counter.yadro.ru/hit?t26.11;r"+
-    escape(document.referrer)+((typeof(screen)=="undefined")?"":
-    ";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
-    screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
-    ";"+Math.random()+
-    "' alt='' title='LiveInternet: number of visitors for today is"+
-    " shown' "+
-    "border='0' width='88' height='15'><\/a>")
-    </script><!--/LiveInternet-->
-    
-    <script type="text/javascript" src="/js/orphus/en-orphus.js"></script>
-	<a href="http://orphus.ru" id="orphus" target="_blank"><img alt="Orphus system" src="/images/orphus.gif" border="0" width="80" height="15" /></a>
-	
-	<!-- Yandex.Metrika counter -->
-	<div style="display:none;"><script type="text/javascript">
-	(function(w, c) {
-	    (w[c] = w[c] || []).push(function() {
-	        try {
-	            w.yaCounter10183648 = new Ya.Metrika({id:10183648, enableAll: true});
-	        }
-	        catch(e) { }
-	    });
-	})(window, "yandex_metrika_callbacks");
-	</script></div>
-	<script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript" defer="defer"></script>
-	<noscript><div><img src="//mc.yandex.ru/watch/10183648" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-	<!-- /Yandex.Metrika counter -->
-	
-	<script type="text/javascript">
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-28979051-1']);
-	  _gaq.push(['_trackPageview']);
-	
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-	
-	</script>
-	
-</div>
+
 
 </body>
 </html>
