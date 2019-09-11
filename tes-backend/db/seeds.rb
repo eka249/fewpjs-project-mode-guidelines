@@ -3,5 +3,8 @@
 #
 # Examples:
 #
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
+
 #   Character.create(name: 'Luke', movie: movies.first)
+
+  psd1= Card.create(color: "purple", 
+  pattern: "squiggle",shape: "diamond", numberObj: 1, sx: 0, sy: 0, sWidth: 55, sHeight: 100, dx: 50, dy: 20, dWidth: 87, dHeight: 104)

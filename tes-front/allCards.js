@@ -2,7 +2,6 @@ function draw() {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
   
-    // Draw slice
     let psd1 = ctx.drawImage(document.getElementById('source'), 0, 0, 55, 100, 50, 20, 87, 104);
     let ptd1 = ctx.drawImage(document.getElementById('source'), 57, 0, 55, 100, 50, 20, 87, 104);
     let pod1 = ctx.drawImage(document.getElementById('source'), 115, 0, 55, 100, 50, 20, 87, 104); 

@@ -1,11 +1,13 @@
 class CardsController < ApplicationController
     def index
-        @cards= card.all
+        @cards= Card.all
         render :json => @cards
        end
     
     def show
-        @card = card.find(params[:id])
+        @card = Card.find(params[:id])
         render :json => @card
     end
+
+    
 end

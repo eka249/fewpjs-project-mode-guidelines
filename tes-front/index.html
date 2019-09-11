@@ -1,14 +1,15 @@
 <!DOCTYPE html>
   <head><title>Placeholder title</title>
-    <script type="text/javascript" src="/index.js"></script>
+    <script type="text/javascript" src="/newGame.js"></script>
 	</head>
 
-	<body onload="draw();"
+	<body onload="draw();">
             <!-- cards rendered on page but will be opque, and pushed to back -->
 
-			<canvas id=“canvas” width=“150" height=“150”></canvas>
-			<div style=“display:none;“>
-			  <img id=“source” src=“https://cdn1.imggmi.com/uploads/2019/9/11/8afd7cf21d6551f71409919734470e16-full.png” width=“300” height=“227">
+			<canvas id=“canvas” width= 150 height=150></canvas>
+			<!-- <div style=“display:none;“> -->
+				<!-- Dont know what above does -->
+			  <img id=“source” src=“https://cdn1.imggmi.com/uploads/2019/9/11/8afd7cf21d6551f71409919734470e16-full.png” width=300 height=227>
 			</div>
 
         <div class="top_header">
@@ -30,7 +31,7 @@
     
 	<form class= "card-table" id="set_form">
 		<div class="grid-container" id= "grid-container">
-			<div class="card1" id="card1">{$cardIds}</div>
+			<div class="card1" id="card1"></div>
 				<img class= "card_img" src= "tbd">
 			<div class="card2" id="card2">{$cardIds}</div>
 			<div class="card3" id="card3">{$cardIds}</div>
