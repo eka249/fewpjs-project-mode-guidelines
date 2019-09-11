@@ -15,78 +15,66 @@ function initialRandomCards(cards){
     //puts default 12 cards in the grid
     //how to make sure they stay in grid format
     let cardTable= document.getElementById("grid-container")
-    x=12
+    cardArr=[]
     let selected = []
-    const times = x => pick => {
+    while (cardArr <12){
         //assign all coordinates in findCard function
         index= Math.floor(Math.random() * (Card.all.length))
-        let element = document.createElement("img")
-        img.src = "https://d17fnq9dkz9hgj.cloudfront.net/breed-uploads/2018/09/dog-landing-hero-sm.jpg?bust=1536935086&width=760"
-        // element.setAttribute([idCounter])
-        element.onclick= e =>{
-            threeClicks(e, cards[index], selected)
-            selected.push(Card[index])
-        }
+        if (!cardArr.includes(index)){
+            let element = document.createElement("img")
+            img.src = Card.all[index].img
+            // element.setAttribute([idCounter])
+            element.onclick = e => ({
+                threeClicks(e, cards)
+                selected.push(Card[index])
+            })
+            
         cardTable.appendChild(element)
+        cardArr.push(index)
+        }
         //how to constrain this to where a card can't be picked twice??  
     }
-
-    //keep track of 3 clicks and the ids of the cards clicked
-    i=0
-    arr=0
-    cardTable.onclick = e => {
-        threeClicks(e, i, arr)
-        i++
-        //push div where div id was the one clicked
-        // arr.push()
-    }
-
-    document.addEventListener('click', e => {
-        threeClicks(e)
-    })
 }
+
+
+
+
 
 function sideBar(){
 
 }
 
-function threeClicks(e, card){
-    if (e.detail === 3) {
-        determineValid(arr)
-        i
-        e.detail ===0
+function threeClicks(e, cards, selected){
+    if (selected.length ==3) {
+        determineValid(arr)}
+        selected.pop()
+        selected.pop()
+        selected.pop()
     }
-}
 
 function determineValid(arr){
     //set up when card model is figured out
     //output validYN
     submitAttempt(validYN)
 }
-// function subitAttempt(validYN){
-//     if (validYN === 1){
-//         score++}
-//     else {
-//         score = score -1 
-//     }
-
-//     //establish connection with db, not url
-//     fetch("http://localhost:3000/cards",
-//         method: "PATCH",
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body:JSON.stringify(
-//             tot.score: score
-//         )
-//     })
-//     //change value on front end to score here
-
-
-
-
-//     }
-// }
+function submitAttempt(validYN){
+    if (validYN === 1){
+        score++}
+    else {
+        score = score -1 
+    }
+    fetch("http://localhost:3000/cards",{
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body:JSON.stringify({
+            totScore: score
+        })
+    })
+    //change value on front end to score here
+    
+}
 
 
 
