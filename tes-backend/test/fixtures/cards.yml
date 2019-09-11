@@ -4,12 +4,12 @@ one:
   img: MyString
   color: MyString
   shape: MyString
-  pattern: MyString
-  numberShape: MyString
+  shading: MyString
+  number: MyString
 
 two:
   img: MyString
   color: MyString
   shape: MyString
-  pattern: MyString
-  numberShape: MyString
+  shading: MyString
+  number: MyString

@@ -2,35 +2,33 @@ document.addEventListener("DOMContentLoaded", newGame)
 
 function newGame(){
     fetchData()
-    initialRandomCards(cards)
-    
 }
 
 function fetchData(){
     fetch("http://localhost:3000/cards")
     .then(response => response.json())
-    .then(cards => console.log(cards))
+    .then(cards => initialRandomCards(cards))
 }
 function initialRandomCards(cards){
+    // console.log(cards)
     //puts default 12 cards in the grid
-    //how to make sure they stay in grid format
+    //how to make sure they stay in grid format?
     let cardTable= document.getElementById("grid-container")
-    cardArr=[]
+    let cardArr=[]
     let selected = []
     while (cardArr <12){
         //assign all coordinates in findCard function
-        index= Math.floor(Math.random() * (Card.all.length))
-        if (!cardArr.includes(index)){
+        randNum= Math.floor(Math.random() * (cards.length))
+        if (!cardArr.includes(randNum)){
             let element = document.createElement("img")
-            img.src = Card.all[index].img
+            element.src = cards[randNum].img
             // element.setAttribute([idCounter])
-            element.onclick = e => ({
-                threeClicks(e, cards)
-                selected.push(Card[index])
-            })
-            
+            // element.onclick = e => ({
+            //     threeClicks(e, cards)
+            //     selected.push(Card[index])
+            // })
         cardTable.appendChild(element)
-        cardArr.push(index)
+        cardArr.push(randNum)
         }
         //how to constrain this to where a card can't be picked twice??  
     }
@@ -44,15 +42,15 @@ function sideBar(){
 
 }
 
-function threeClicks(e, cards, selected){
+function threeClicks(e,selected){
     if (selected.length ==3) {
-        determineValid(arr)}
+        determineValid(selected)}
         selected.pop()
         selected.pop()
         selected.pop()
     }
 
-function determineValid(arr){
+function determineValid(selected){
     //set up when card model is figured out
     //output validYN
     submitAttempt(validYN)

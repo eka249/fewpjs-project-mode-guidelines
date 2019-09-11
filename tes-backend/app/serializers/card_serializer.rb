@@ -1,3 +1,3 @@
 class CardSerializer < ActiveModel::Serializer
-  attributes :id, :img, :color, :shape, :pattern, :numberShape
+  attributes :id, :img, :color, :shape, :shading, :number
 end

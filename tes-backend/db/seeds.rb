@@ -1,29 +1,22 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
+
+#number, shading, color, shape
+#h= striped
+#s = solid
+#o = open
+
+#g = green
+#p = purple
+#r = red
+
+#p = pill
+#d = diamond
+#s = squiggly
 
 
-
-
-
-
-gr= "green"
-pu= "purple"
-re ="red"
-
-so="solid"
-st="stripe"
-op="open"
-
-di="diamond"
-ov="oval"
-sq="squiggly"
-
-#color, shape, shading,  number
-
-pu_sq_op_1= Card.create(img:"tes-backend/app/images/cards/green1squiggly-open-3.jpg" , color: "purple", shape: "squiggly", shading: "open",  number: 1) 
-pu_sq_st_1= Card.create(img:"tes-backend/app/images/cards/green1squiggly-open-3.jpg" , color: "purple", shape: "squiggly", shading: "striped",  number: 1) 
-pu_sq_op_1= Card.create(img:"tes-backend/app/images/cards/green1squiggly-open-3.jpg" , color: "purple", shape: "squiggly", shading: "open",  number: 1) 
-pu_sq_op_1= Card.create(img:"tes-backend/app/images/cards/green1squiggly-open-3.jpg" , color: "purple", shape: "squiggly", shading: "open",  number: 1) 
+pu_sq_op_1= Card.create(img: 
+# pu_sq_st_1= Card.create(img:"tes-backend/app/images/cards/green1squiggly-open-3.jpg" , color: "purple", shape: "squiggly", shading: "striped",  number: 1) 
+# pu_sq_op_1= Card.create(img:"tes-backend/app/images/cards/green1squiggly-open-3.jpg" , color: "purple", shape: "squiggly", shading: "open",  number: 1) 
+# pu_sq_op_1= Card.create(img:"tes-backend/app/images/cards/green1squiggly-open-3.jpg" , color: "purple", shape: "squiggly", shading: "open",  number: 1) 
 
 
 
@@ -31,14 +24,14 @@ pu_sq_op_1= Card.create(img:"tes-backend/app/images/cards/green1squiggly-open-3.
 
 
 
-psd1= Card.create(img:"" , color: "purple", shape: "diamond", shading: "solid", number: 1)
+# psd1= Card.create(img:"" , color: "purple", shape: "diamond", shading: "solid", number: 1)
 
 
 
 
 
-#####################
-psd1= Card.create(img:"" , color: "purple", shape: "diamond", shading: "solid", number: 1)  
+# #####################
+# psd1= Card.create(img:"" , color: "purple", shape: "diamond", shading: "solid", number: 1)  
 
 
 

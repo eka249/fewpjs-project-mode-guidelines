@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2019_09_10_221217) do
   end
 
   create_table "cards", force: :cascade do |t|
+    t.string "img"
     t.string "color"
     t.string "shape"
     t.string "shading"
