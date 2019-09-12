@@ -6,69 +6,25 @@ function main(){
     fetchGames()
 }
 
-function pageButtons(){
-    let gameMenu= document.getElementById("menu")
-    let newButton= document.getElementById("newGame")
-    newButton.innerText= "New Game!"
-    newButton.addEventListener("click", e => {
-        newGame(e)
-    })
 
-    
-
-
-    //"sets:" inner text
-    //display counter data
-    //timer as a stretch goal
-
-
-
-    // Get the modal
-    var modal = document.getElementById("myModal");
-
-    // Get the button that opens the modal
-    var btn = document.getElementById("myBtn");
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks the button, open the modal 
-    btn.onclick = function() {
-    modal.style.display = "block";
-    }
-
-    //What is in the modal
-    var content = document.getElementById("modal-header")
-    content.innerText= scoresStats()
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-    modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-          modal.style.display = "none";
-        }
-    }
-} 
 
     function newGame(e){
         e.preventDefault();
         fetch("http://localhost:3000/games" , {
             method: "POST",
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
+            //    'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 totScore:0
             })
         })
-        .then(response => response.json())
+        .then(response => response.json()
+        )
+        // .then(testscore=> console.log(testscore))
         //how do we connect current game with gameplay-question for after gameplay is over
-        
+        .then(results=> submitAttempt(0, results))
     
     }
 
@@ -84,9 +40,6 @@ function pageButtons(){
     function initialRandomCards(cards){
         //puts default 12 cards in the grid
         let cardTable = document.getElementById("container")
-        // let row1= document.getElementById("row1")
-        // let row2= document.getElementById("row2")
-        // let row3= document.getElementById("row3")
         let cardArr = []
         let selected = []
         for (i = 0; i < 12; i++) {
@@ -120,8 +73,8 @@ function pageButtons(){
             selected.pop()
             selected.pop()
         }
-        else {console.log("not three clicks yet")
-                console.log(selected)}
+        else {console.log(selected)
+                }
     }
 
     function determineValid(selected){
@@ -132,17 +85,24 @@ function pageButtons(){
             { var validYN= 1
             }
         else { var validYN=0}
-        submitAttempt(validYN)
+        submitAttempt(validYN, {})
     }
 
-    function submitAttempt(validYN){
+    function submitAttempt(validYN, results){
+
+        console.log("results at submitattempt",results)
         if (validYN === 1){
             totScore++
         }
         else {
-            totScore = totScore -1 
+            totScore = results.totScore -1 
         }
-        fetch("http://localhost:3000/games",{
+        console.log("totScore")
+        console.log(totScore)
+        submitNewScore(totScore)
+    }
+    function submitNewScore(totScore){
+        fetch("http://localhost:3000/games", {
             method: "PATCH",
             headers: {
                 'Content-Type': 'application/json',
@@ -164,11 +124,11 @@ function pageButtons(){
         .then(games => statsScores(games))
     }
 
-    function statsScores(games)
+    function statsScores(games){
         sortedScores= games.sort(function(a, b){
         return a.totScore - b.totScore;
         });
-        maxScores= sortedScores[0..5]
+        // maxScores= sortedScores[0..5]
         //too tired to find the corresponding players right now
     }
 
@@ -195,3 +155,54 @@ function pageButtons(){
 //     }
 //     break
 // }
+
+
+function pageButtons(){
+    let gameMenu= document.getElementById("menu")
+    let newButton= document.getElementById("newGame")
+    newButton.innerText= "New Game!"
+    newButton.addEventListener("click", e => {
+        newGame(e)
+    })
+    
+
+    
+
+
+    //"sets:" inner text
+    //display counter data
+    //timer as a stretch goal
+
+
+
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal 
+    btn.onclick = function() {
+    modal.style.display = "block";
+    }
+
+    //What is in the modal
+    var content = document.getElementById("modal-header")
+    // content.innerText= scoresStats()
+    //figure out how to show this in text
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+    modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+    }
+} 
