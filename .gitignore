@@ -9,4 +9,4 @@ tmp
 *.iml
 *.log
 *.swp
-*.db
+/Users/ellyn/Development/Mod3/fewpjs-project-mode-guidelines/tes-backend/db/seeds.rb
