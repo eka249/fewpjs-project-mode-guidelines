@@ -10,19 +10,20 @@ class GamesController < ApplicationController
         render :json => @game
     end
 
+    def new
+        @game=Game.new
+    end
+
     def create
         @game = Game.new(game_params)
-        # @game.name = game.name
         @game.save
         render :json => @game
     end
 
-    # def edit
-    #     @game.
-    # end
-
     def update
-    end
+        @game = Game.find(params[:id])
+        @game.update(totScore: game_params)
+      end
 
 
     def delete

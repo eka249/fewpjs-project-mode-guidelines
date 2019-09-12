@@ -109,20 +109,22 @@ function determineValid(selected){
 
 function submitAttempt(validYN, results){
 
-    console.log("results at submitattempt",results)
+    console.log("results at submitattempt", results.id)
     if (validYN === true){
         totScore++
     }
     else {
         totScore = results.totScore -1 
     }
-    console.log("totScore")
-    console.log(totScore)
-    submitNewScore(totScore)
+    // console.log("totScore")
+    // console.log(totScore)
+    submitNewScore(totScore, results)
 }
     
-function submitNewScore(totScore){
-    fetch("http://localhost:3000/games", {
+function submitNewScore(totScore, results){
+    // console.log("the id of item to fetch")
+    // console.log(results.id)
+    fetch(`http://localhost:3000/games/${results.id}`, {
         method: "PATCH",
         headers: {
             'Content-Type': 'application/json',
