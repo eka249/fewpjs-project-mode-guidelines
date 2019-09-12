@@ -37,10 +37,10 @@ let allCardsUsed = []
 function initialRandomCards(cards){
     //puts default 12 cards in the grid
     let cardTable = document.getElementById("container")
-    
+    // let allCardsUsed = []
     let selected = []
     
-    for (i = 0; i < 12; i++) {
+    for (i = 0; i < allCardsUsed.length; i++) {
         randCard= Math.floor(Math.random() * (cards.length))
         // console.log(randCard)
         // console.log(cards[randCard].img)
@@ -51,19 +51,24 @@ function initialRandomCards(cards){
             // image.setAttribute([idCounter])
             image.addEventListener("click", e => {
                 // console.log("click working")
-                selected.push(cards[randCard])
-                selected.forEach(card =>{
-                    allCardsUsed.push(card)
-                })
-                threeClicks(e, cards)
+                threeClicks(e, selected)
+            })
+            selected.push(cards[randCard])
+            selected.forEach(card =>{   
+            allCardsUsed.push(card)
             })
             cardTable.appendChild(image)
             // cardArr.push(cards[randCard])
             // console.log(cardArr)
             // console.log(selected)
+        
         }
     }
 }
+
+
+//take selected.push out of addeventlistener
+//change threeclicks input
 
 function threeClicks(e,selected){
     if (selected.length == 3) {
