@@ -39,31 +39,30 @@ function initialRandomCards(cards){
     let cardTable = document.getElementById("container")
     // let allCardsUsed = []
     let selected = []
-    
-    for (i = 0; i < allCardsUsed.length; i++) {
-        randCard= Math.floor(Math.random() * (cards.length))
-        // console.log(randCard)
-        // console.log(cards[randCard].img)
-        if (!allCardsUsed.includes(randCard)){
-            let image = document.createElement("img")
-            image.src = cards[randCard].img
-            image.setAttribute("class", ".col-sm")
-            // image.setAttribute([idCounter])
-            image.addEventListener("click", e => {
-                // console.log("click working")
-                threeClicks(e, selected)
-            })
+    let currentTwelve = []
+    for (i = 0; i > 12; i++) {
+        randCard = Math.floor(Math.random() * (cards.length))
+        currentTwelve.push(cards.splice(randCard,1))
+        let image = document.createElement("img")
+        image.src = cards[randCard].img
+        image.setAttribute("class", ".col-sm")
+        // image.setAttribute([idCounter])
+        image.addEventListener("click", e => {
+            // console.log("click working")
+            console.log(e)
             selected.push(cards[randCard])
-            selected.forEach(card =>{   
-            allCardsUsed.push(card)
-            })
-            cardTable.appendChild(image)
+            threeClicks(e, selected)
+
+        })
+        
+        
+        cardTable.appendChild(image)
             // cardArr.push(cards[randCard])
             // console.log(cardArr)
             // console.log(selected)
         
         }
-    }
+    
 }
 
 
