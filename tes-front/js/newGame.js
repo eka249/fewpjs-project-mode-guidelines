@@ -2,7 +2,37 @@ document.addEventListener("DOMContentLoaded", newGame)
 
 function newGame(){
     fetchData()
+    pageButtons()
 }
+
+function pageButtons(){
+    let gameMenu= document.getElementById("menu")
+    let newButton= document.getElementById("newGame")
+    newButton.onclick= e =>{
+        newGame(e)
+    }
+    newButton.innerText= "New Game!"
+    //"sets:" inner text
+    //display counter data
+    //timer as a stretch goal
+    
+
+}
+
+
+function newGame(e){
+    fetch("http://localhost:3000/games", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body:JSON.stringify({
+            userId: userId,
+            totScore: 0
+        })
+    })
+}
+
 
 function fetchData(){
     fetch("http://localhost:3000/cards")
@@ -42,12 +72,6 @@ function displayCards(cardArr){
 }
 
 
-
-
-function sideBar(){
-
-}
-
 function threeClicks(e,selected){
     if (selected.length ==3) {
         determineValid(selected)}
@@ -84,18 +108,3 @@ function submitAttempt(validYN){
 
 
 
-
-
-
-
-
-
-
-///////////////////////////////////////
-////when using canvas///////////
-
-function findCard(index, cards) {
-    let addCard= canvas.getContext('2d').drawImage("https://cdn1.imggmi.com/uploads/2019/9/11/8afd7cf21d6551f71409919734470e16-full.png", cards[index].sx, cards[index].sy, cards[index].sWdith, cards[index].sHeight, cards[index].dx, cards[index].dy, cards[index].dWidth, cards[index].dHeight);
-    return addCard
-}
-///////////////////////////////////////
