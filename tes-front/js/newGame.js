@@ -31,11 +31,11 @@ function main(){
 
 
 
-    function fetchCards(){
-        fetch("http://localhost:3000/cards")
-        .then(response => response.json())
-        .then(cards => initialRandomCards(cards))
-    }
+function fetchCards(){
+    fetch("http://localhost:3000/cards")
+    .then(response => response.json())
+    .then(cards => initialRandomCards(cards))
+}
 
     function initialRandomCards(cards){
         //puts default 12 cards in the grid
@@ -62,31 +62,44 @@ function main(){
                 // console.log(selected)
             }
         }
-
     }
 
-
-    function threeClicks(e,selected){
-        if (selected.length >= 3) {
-            determineValid(selected)
-            selected.pop()
-            selected.pop()
-            selected.pop()
-        }
-        else {console.log(selected)
-                }
+function threeClicks(e,selected){
+    if (selected.length == 3) {
+        determineValid(selected)
+        selected.pop()
+        selected.pop()
+        selected.pop()
     }
-
-    function determineValid(selected){
-        if (selected[0].color !=selected[1].color !=selected[2].color &&
-            selected[0].shape !=selected[1].shape !=selected[2].shape &&
-            selected[0].number !=selected[1].number !=selected[2].number &&
-            selected[0].shading !=selected[1].shading !=selected[2].shading)
-            { var validYN= 1
+    else {console.log(selected)
+    }
+}
+function determineValid(selected){
+    let a = selected[0]
+    let b = selected[1]
+    let c = selected[2]
+    let validYN = false
+    if (!((a.number == b.number) && (b.number == c.number) ||
+            (a.number != b.number) && (a.number != c.number) && (b.number != c.number))) {
+        validYN = false;
+    }
+    if (!((a.shape == b.shape) && (b.shape == c.shape) ||
+            (a.shape != b.shape) && (a.shape != c.shape) && (b.shape != c.shape))) {
+        validYN = false;
             }
-        else { var validYN=0}
-        submitAttempt(validYN, {})
+        if (!((a.shading == b.shading) && (b.shading == c.shading) ||
+        (a.shading != b.shading) && (a.shading != c.shading) && (b.shading != c.shading))) {
+        validYN = false;
     }
+    if (!((a.color == b.color) && (b.color == c.color) ||
+            (a.color != b.color) && (a.color != c.color) && (b.color != c.color))) {
+        validYN = false;
+    }
+    else {
+        validYN = true
+    }
+    submitAttempt(validYN)
+}
 
     function submitAttempt(validYN, results){
 
@@ -116,13 +129,7 @@ function main(){
         //change value on front end to score here
         return totScore
     }
-
-
-    function fetchGames(games){
-        fetch("http://localhost:3000/games")
-        .then(response => response.json())
-        .then(games => statsScores(games))
-    }
+   
 
     function statsScores(games){
         sortedScores= games.sort(function(a, b){
@@ -131,6 +138,21 @@ function main(){
         // maxScores= sortedScores[0..5]
         //too tired to find the corresponding players right now
     }
+    
+
+function fetchGames(games){
+    fetch("http://localhost:3000/games")
+    .then(response => response.json())
+    .then(games => statsScores(games))
+}
+
+function statsScores(games){
+    sortedScores= games.sort(function(a, b){
+    return a.totScore - b.totScore;
+    });
+    // maxScores= sortedScores[0..5]
+    //too tired to find the corresponding players right now
+}
 
 
 ////////////backup loop code
