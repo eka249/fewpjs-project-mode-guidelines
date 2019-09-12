@@ -13,8 +13,8 @@
 #s = squiggly
 
 
-pu_sq_op_1= Card.create(img: 
-# pu_sq_st_1= Card.create(img:"tes-backend/app/images/cards/green1squiggly-open-3.jpg" , color: "purple", shape: "squiggly", shading: "striped",  number: 1) 
+# pu_sq_op_1= Card.create(img: 
+pu_sq_st_1= Card.create(img:"/Users/ellyn/Development/Mod3/fewpjs-project-mode-guidelines/tes-backend/app/images/svg/icons/1HgD.svg" , color: "purple", shape: "squiggly", shading: "striped",  number: 1) 
 # pu_sq_op_1= Card.create(img:"tes-backend/app/images/cards/green1squiggly-open-3.jpg" , color: "purple", shape: "squiggly", shading: "open",  number: 1) 
 # pu_sq_op_1= Card.create(img:"tes-backend/app/images/cards/green1squiggly-open-3.jpg" , color: "purple", shape: "squiggly", shading: "open",  number: 1) 
 
