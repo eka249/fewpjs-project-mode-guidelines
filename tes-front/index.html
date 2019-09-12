@@ -1,41 +1,70 @@
 <!DOCTYPE html>
   <head><title>Placeholder title</title>
     <script type="text/javascript" src="js/newGame.js"></script>
+	<link rel="stylesheet" href="/Users/ellyn/Development/Mod3/fewpjs-project-mode-guidelines/tes-front/css/style.css">
 	</head>
 
-        <div class="top_header">
+    	<div class="top_header">
 		<!-- insert new user, sign in here -->
 		</div>
-			<!-- Trigger/Open The Modal -->
-			<button id="statsBtn">Awesome Scores</button>
-			<!-- The Modal -->
-			<div id="statsModal" class="modal">
-			<!-- Modal content -->
-			<div class="stats-content">
-				<span class="close">&times;</span>
-				<p>Modal placeholder</p>
-			</div>
+		<body>
 
-			</div>
-    <div id="game-controls">
-		<div id="menu" class= "sideBar">
-			<a class="newButton" id="newGame"></a><span>New Game</span></a>
-			<a id= "setCount"></a><span>Sets:</span>
-			<a id= "setCounter"></a><span>${setCount}</span>
-		<!-- the above setCount incompelete in js -->
-			<a id= "time"></a><span>Time:</span>
-		<!-- the above timerEvent incompelete in js (also a stretch goal) -->
-			<a id= "timeCounter"></a><span>${timerEvent}</span>
 
+				<h2>Animated Modal with Header and Footer</h2>
+				
+				<!-- Trigger/Open The Modal -->
+				<button id="myBtn">The Stats</button>
+				
+				<!-- The Modal -->
+				<div id="myModal" class="modal">
+				
+				  <!-- Modal content -->
+				  <div class="modal-content">
+					<div class="modal-header" id="modal-header">
+					  <span class="close">&times;</span>
+					  <h2>High Scores!</h2>
+					</div>
+					<div class="modal-body">
+					  <p>Here's the MVPs</p>
+					  <p>Some other text...</p>
+					</div>
+					<div class="modal-footer">
+					  <h3>Modal Footer</h3>
+					</div>
+				  </div>
+				
+				</div>
+
+
+
+
+
+    <div class="container" id="game-controls">
+		<div id="menu" class= "sideBar"></div>
+			<button class="sideBar" id="newGame"></button>
 		</div>
+		<div id= "score-and-time">
+			<li class= "sideBar" id= "setLabel">Sets:</li>
+			<li id= "setCounter"></li>
+			<!-- <li id="timeLabel"></li>
+			<li id="timeCounter"></li> -->
+		</div>
+		<!-- the above setCount incompelete in js -->
+			<!-- <a id= "time"></a><span>Time:</span> -->
+		<!-- the above timerEvent incompelete in js (also a stretch goal) -->
+			<!-- <a id= "timeCounter"></a><span>${timerEvent}</span> -->
+
+		
 	</div>
     
-	<form class= "card-table" id="set_form">
-		<div class="grid-container" id= "grid-container">
-
-		</div>
+	<!-- <div class= "card-table" id="set_form"> -->
+	<div class="grid-container" id= "container" >
+	<!-- style="height: 400 px;"> -->
 		
-    </form>
+	</div>
+
+
+
 
 
 </body>

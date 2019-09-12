@@ -1,3 +1,3 @@
 class GameSerializer < ActiveModel::Serializer
-  attributes :id, :userId, :totScore
+  attributes :id, :totScore
 end

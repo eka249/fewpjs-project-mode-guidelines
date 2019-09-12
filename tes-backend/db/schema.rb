@@ -35,7 +35,6 @@ ActiveRecord::Schema.define(version: 2019_09_10_221217) do
   end
 
   create_table "games", force: :cascade do |t|
-    t.integer "userId"
     t.integer "totScore"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

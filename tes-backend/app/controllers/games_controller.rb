@@ -25,7 +25,7 @@ class GamesController < ApplicationController
     private
 
     def game_params
-        params.require(:game).permit(:userID, :totScore => {})
+        params.require(:game).permit(:totScore => {})
     end
 
 end
