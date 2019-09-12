@@ -54,123 +54,132 @@ function pageButtons(){
     }
 } 
 
-    function newGame(e){
-        e.preventDefault();
-        fetch("http://localhost:3000/games" , {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                totScore:0
-            })
+function newGame(e){
+    e.preventDefault();
+    fetch("http://localhost:3000/games" , {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            totScore:0
         })
-        .then(response => response.json())
-        //how do we connect current game with gameplay-question for after gameplay is over
-        
-    
-    }
+    })
+    .then(response => response.json())
+    //how do we connect current game with gameplay-question for after gameplay is over
+}
 
+function fetchCards(){
+    fetch("http://localhost:3000/cards")
+    .then(response => response.json())
+    .then(cards => initialRandomCards(cards))
+}
 
-
-
-    function fetchCards(){
-        fetch("http://localhost:3000/cards")
-        .then(response => response.json())
-        .then(cards => initialRandomCards(cards))
-    }
-
-    function initialRandomCards(cards){
-        //puts default 12 cards in the grid
-        let cardTable = document.getElementById("container")
-        // let row1= document.getElementById("row1")
-        // let row2= document.getElementById("row2")
-        // let row3= document.getElementById("row3")
-        let cardArr = []
-        let selected = []
-        for (i = 0; i < 12; i++) {
-            randCard= Math.floor(Math.random() * (cards.length))
-            // console.log(randCard)
-            // console.log(cards[randCard].img)
-            if (!cardArr.includes(randCard)){
-                let image = document.createElement("img")
-                image.src = cards[randCard].img
-                image.setAttribute("class", ".col-sm")
-                // image.setAttribute([idCounter])
-                image.addEventListener("click", e => {
-                    // console.log("click working")
-                    selected.push(cards[randCard])
-                    threeClicks(e, cards)
-                })
-                cardTable.appendChild(image)
-                cardArr.push(cards[randCard])
-                // console.log(cardArr)
-                // console.log(selected)
-            }
-        }
-
-    }
-
-
-    function threeClicks(e,selected){
-        if (selected.length >= 3) {
-            determineValid(selected)
-            selected.pop()
-            selected.pop()
-            selected.pop()
-        }
-        else {console.log("not three clicks yet")
-                console.log(selected)}
-    }
-
-    function determineValid(selected){
-        if (selected[0].color !=selected[1].color !=selected[2].color &&
-            selected[0].shape !=selected[1].shape !=selected[2].shape &&
-            selected[0].number !=selected[1].number !=selected[2].number &&
-            selected[0].shading !=selected[1].shading !=selected[2].shading)
-            { var validYN= 1
-            }
-        else { var validYN=0}
-        submitAttempt(validYN)
-    }
-
-    function submitAttempt(validYN){
-        if (validYN === 1){
-            totScore++
-        }
-        else {
-            totScore = totScore -1 
-        }
-        fetch("http://localhost:3000/games",{
-            method: "PATCH",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body:JSON.stringify({
-                totScore: totScore
+function initialRandomCards(cards){
+    //puts default 12 cards in the grid
+    let cardTable = document.getElementById("container")
+    // let row1= document.getElementById("row1")
+    // let row2= document.getElementById("row2")
+    // let row3= document.getElementById("row3")
+    let cardArr = []
+    let selected = []
+    for (i = 0; i < 12; i++) {
+        randCard= Math.floor(Math.random() * (cards.length))
+        // console.log(randCard)
+        // console.log(cards[randCard].img)
+        if (!cardArr.includes(randCard)){
+            let image = document.createElement("img")
+            image.src = cards[randCard].img
+            image.setAttribute("class", ".col-sm")
+            // image.setAttribute([idCounter])
+            image.addEventListener("click", e => {
+                // console.log("click working")
+                selected.push(cards[randCard])
+                threeClicks(e, cards)
             })
+            cardTable.appendChild(image)
+            cardArr.push(cards[randCard])
+            // console.log(cardArr)
+            // console.log(selected)
+        }
+    }
+
+}
+
+function threeClicks(e,selected){
+    if (selected.length == 3) {
+        determineValid(selected)
+        selected.pop()
+        selected.pop()
+        selected.pop()
+    }
+    else {console.log("not three clicks yet")
+            console.log(selected)}
+}
+
+function determineValid(selected){
+    let a = selected[0]
+    let b = selected[1]
+    let c = selected[2]
+    let validYN = false
+    if (!((a.number == b.number) && (b.number == c.number) ||
+            (a.number != b.number) && (a.number != c.number) && (b.number != c.number))) {
+        validYN = false;
+    }
+    if (!((a.shape == b.shape) && (b.shape == c.shape) ||
+            (a.shape != b.shape) && (a.shape != c.shape) && (b.shape != c.shape))) {
+        validYN = false;
+    }
+    if (!((a.shading == b.shading) && (b.shading == c.shading) ||
+            (a.shading != b.shading) && (a.shading != c.shading) && (b.shading != c.shading))) {
+        validYN = false;
+    }
+    if (!((a.color == b.color) && (b.color == c.color) ||
+            (a.color != b.color) && (a.color != c.color) && (b.color != c.color))) {
+        validYN = false;
+    }
+    else {
+        validYN = true
+    }
+    submitAttempt(validYN)
+}
+
+function submitAttempt(validYN){
+    if (validYN === 1){
+        totScore++
+    }
+    else {
+        totScore = totScore -1 
+    }
+    fetch("http://localhost:3000/games",{
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body:JSON.stringify({
+            totScore: totScore
         })
-        let setCounter= document.getElementById("setCounter")
-        setCounter.innerHTML= totScore
-        //change value on front end to score here
-        return totScore
-    }
+    })
+    let setCounter= document.getElementById("setCounter")
+    setCounter.innerHTML= totScore
+    //change value on front end to score here
+    return totScore
+}
 
+function fetchGames(games){
+    fetch("http://localhost:3000/games")
+    .then(response => response.json())
+    .then(games => statsScores(games))
+}
 
-    function fetchGames(games){
-        fetch("http://localhost:3000/games")
-        .then(response => response.json())
-        .then(games => statsScores(games))
-    }
-
-    function statsScores(games)
-        sortedScores= games.sort(function(a, b){
-        return a.totScore - b.totScore;
-        });
-        maxScores= sortedScores[0..5]
-        //too tired to find the corresponding players right now
-    }
+function statsScores(games){
+    sortedScores= games.sort(function(a, b){
+    return a.totScore - b.totScore;
+    });
+    maxScores= sortedScores[0..5]
+    //too tired to find the corresponding players right now
+}
 
 
 ////////////backup loop code
