@@ -43,27 +43,33 @@ function initialRandomCards(cards){
     // console.log(cards)
     //puts default 12 cards in the grid
     //how to make sure they stay in grid format?
-    let cardTable= document.getElementById("grid-container")
-    let cardArr=[]
+    let cardTable = document.getElementById("grid-container")
+    let cardArr = []
     let selected = []
-    while (cardArr <12){
+    while (cardArr.length < 12){
         //assign all coordinates in findCard function
-        randNum= Math.floor(Math.random() * (cards.length))
-        if (!cardArr.includes(randNum)){
-            let element = document.createElement("img")
-            element.src = cards[randNum].img
+        randCard= Math.floor(Math.random() * (cards.length))
+        if (!cardArr.includes(randCard)){
+            let image = document.createElement("img")
+            image.src = cards[randCard].img
             // element.setAttribute([idCounter])
             // element.onclick = e => ({
             //     threeClicks(e, cards)
             //     selected.push(Card[index])
             // })
-        cardTable.appendChild(element)
-        cardArr.push(randNum)
+            cardTable.appendChild(image)
+            cardArr.push(randCard)
         }
         //how to constrain this to where a card can't be picked twice??  
     }
+    displayCards(cardArr)
 }
 
+function displayCards(cardArr){
+    cardArr.forEach(card => {
+        
+    })
+}
 
 
 function threeClicks(e,selected){
@@ -85,7 +91,7 @@ function submitAttempt(validYN){
     else {
         score = score -1 
     }
-    fetch("http://localhost:3000/cards",{
+    fetch("http://localhost:3000/games",{
         method: "PATCH",
         headers: {
             'Content-Type': 'application/json',
