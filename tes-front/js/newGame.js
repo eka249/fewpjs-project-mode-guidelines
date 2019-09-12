@@ -155,8 +155,12 @@ function fetchGames(){
 
 function statsScores(games){
     sortedScores= games.sort(function(a, b){
-    return a.totScore - b.totScore;
+    return parseFloat(a.totScore) - parseFloat(b.totScore);
     });
+    let highScores= games.sort(function(a, b) {return a.totScore < b.totScore ? 1 : -1; })
+    .slice(0, 10);
+    console.log(highScores)
+    return highScores
     // maxScores= sortedScores[0..5]
     //too tired to find the corresponding players right now
 }
@@ -220,7 +224,7 @@ function pageButtons(){
 
     //What is in the modal
     var content = document.getElementById("modal-header")
-    // content.innerText= scoresStats()
+    content.innerText= statsScores()
     //figure out how to show this in text
 
     // When the user clicks on <span> (x), close the modal
