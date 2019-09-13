@@ -1,6 +1,7 @@
 <!DOCTYPE html>
   <head><title>TES Game</title>
-    <script type="text/javascript" src="js/newGame.js"></script>
+	<!-- <script type="text/javascript" src="js/newGame.js"></script> -->
+	<script type="text/javascript" src="js/newGameV2.js"></script>
 	<link rel="stylesheet" href='../tes-front/css/style.css'>
 	</head>
 
@@ -12,21 +13,20 @@
 
 				
 				
-				<!-- Trigger/Open The Modal -->
+				<!-- Trigger/Open The stats Modal -->
 				<button id="myBtn">The Stats</button>
 				
-				<!-- The Modal -->
+				<!-- The stats Modal -->
 				<div id="myModal" class="modal">
 				
-				  <!-- Modal content -->
+				  <!-- stats Modal content -->
 				  <div class="modal-content">
 					<div class="modal-header" id="modal-header">
 					  <span class="close">&times;</span>
 					  <h2>High Scores!</h2>
 					</div>
-					<div class="modal-body">
-					  <p>Here's the MVPs</p>
-					  <p>Some other text...</p>
+					<div class="modal-body" id="modal-body">
+					  
 					</div>
 					<div class="modal-footer">
 					  <h3>Modal Footer</h3>
@@ -34,6 +34,32 @@
 				  </div>
 				
 				</div>
+
+				<!-- Trigger/Open The endgame Modal -->
+				<button id="give-up">I Give Up</button> 
+				
+				<!-- The endgame Modal -->
+				<div id="end-modal" class="modal">
+
+					<!-- end Modal content -->
+					<div class="modal-content">
+							<div class="modal-header" id="end-modal-header">
+								<span class="close">&times;</span>
+								<h2> </h2>
+							</div>
+							<div class="modal-body" id="end-modal-body">
+								<p>GAME OVER</p>
+		
+								<p>Enter Your Name Here</p>
+							</div>
+							<div class="modal-footer">
+								<h3>End Modal Footer</h3>
+							</div>
+						</div>
+						
+					</div>
+
+
 
 
 
@@ -48,11 +74,13 @@
 		<div id= "score-and-time">
 			<li class= "sideBar" id= "setLabel">Sets:</li>
 			<li id= "setCounter"></li>
+			<li class= "sideBar" id= "setLabel">Strikes:</li>
+			<li id="strikes"></li>
 		</div>
-		<div id="resetGame" class= "sideBar"></div>
-			<button class="sideBar" id="iGiveUp"></button>
-	</div>
-
+		
+		<div id="resetGame"></div>
+			<button id="iGiveUp"></button>
+		</div>
 	<!-- <div class= "card-table" id="set_form"> -->
 	<div class="grid-container" id= "container">
 		
