@@ -25,44 +25,38 @@ function newGame(e){
     .then(results=> submitAttempt(0, results))
 
 }
-
+var cards
 function fetchCards(){
     fetch("http://localhost:3000/cards")
     .then(response => response.json())
     .then(cards => initialRandomCards(cards))
 }
 
-let allCardsUsed = []
 
 function initialRandomCards(cards){
     //puts default 12 cards in the grid
+    console.log(cards)
     let cardTable = document.getElementById("container")
     // let allCardsUsed = []
     let selected = []
     let currentTwelve = []
-    for (i = 0; i > 12; i++) {
+    for (i = 0; i < 12; i++) {
         randCard = Math.floor(Math.random() * (cards.length))
-        currentTwelve.push(cards.splice(randCard,1))
         let image = document.createElement("img")
-        image.src = cards[randCard].img
+        let imageCard = cards[randCard]
+        image.src = imageCard.img
+        image.id = imageCard.id
+        // console.log(image.id)
+        // console.log(imageCard.id)
         image.setAttribute("class", ".col-sm")
-        // image.setAttribute([idCounter])
-        image.addEventListener("click", e => {
-            // console.log("click working")
-            console.log(e)
-            selected.push(cards[randCard])
+        image.onclick = e => {
+            selected.push(imageCard)
             threeClicks(e, selected)
-
-        })
-        
-        
-        cardTable.appendChild(image)
-            // cardArr.push(cards[randCard])
-            // console.log(cardArr)
-            // console.log(selected)
-        
         }
-    
+        currentTwelve.push(cards.splice(cards[randCard],1))
+        cardTable.appendChild(image)
+    }
+    console.log(cards)
 }
 
 
@@ -72,45 +66,69 @@ function initialRandomCards(cards){
 function threeClicks(e,selected){
     if (selected.length == 3) {
         determineValid(selected)
-        selected.pop()
-        selected.pop()
-        selected.pop()
+        selected = []
+        console.log(selected)
     }
-    else {console.log(selected)
+    else {console.log(selected.length)
     }
 }
 function determineValid(selected){
     let a = selected[0]
     let b = selected[1]
     let c = selected[2]
-    let validYN = false
+    let valid = null
+    let numberValid = null
+    let shapeValid = null
+    let shadingValid = null
+    let colorValid = null
     if (!((a.number == b.number) && (b.number == c.number) ||
             (a.number != b.number) && (a.number != c.number) && (b.number != c.number))) {
-        validYN = false;
+        numberValid = false;
+        console.log(numberValid)
+    } else {
+        numberValid = true
+        console.log(numberValid)
     }
     if (!((a.shape == b.shape) && (b.shape == c.shape) ||
             (a.shape != b.shape) && (a.shape != c.shape) && (b.shape != c.shape))) {
-        validYN = false;
-            }
-        if (!((a.shading == b.shading) && (b.shading == c.shading) ||
+        shapeValid = false;
+        console.log(shapeValid)
+    } else {
+        shapeValid = true
+        console.log(shapeValid)
+    }
+    if (!((a.shading == b.shading) && (b.shading == c.shading) ||
         (a.shading != b.shading) && (a.shading != c.shading) && (b.shading != c.shading))) {
-        validYN = false;
+        shadingValid = false;
+        console.log(shadingValid)
+    } else {
+        shadingValid = true
+        console.log(shadingValid)
     }
     if (!((a.color == b.color) && (b.color == c.color) ||
             (a.color != b.color) && (a.color != c.color) && (b.color != c.color))) {
-        validYN = false;
+        colorValid = false;
+        console.log(colorValid)
+    } else {
+        colorValid = true
+        console.log(colorValid)
     }
-    else {
-        validYN = true
+    if ((numberValid == true) && (shapeValid == true) && (shadingValid == true) && (colorValid == true)) { 
+        valid = true
+        console.log(valid)
     }
-    submitAttempt(validYN)
+    submitAttempt(valid, selected)
 }
 
-function submitAttempt(validYN, results){
+function submitAttempt(valid, results, selected){
 
-    console.log("results at submitattempt", results.id)
-    if (validYN === true){
-        totScore++
+    // console.log("results at submitattempt", results.id)
+    if (valid === true){
+        // totScore++
+        //remove the 3 selected cards
+        cardToBeRemoved_1 = document.getElementById(`${selected[0].id}`)
+        console.log(cardToBeRemoved_1)
+        drawCards(cards)
     }
     else {
         totScore = results.totScore -1 
@@ -120,6 +138,11 @@ function submitAttempt(validYN, results){
     submitNewScore(totScore, results)
 }
     
+function drawCards(cards){
+
+}
+
+
 function submitNewScore(totScore, results){
     // console.log("the id of item to fetch")
     // console.log(results.id)
@@ -136,7 +159,9 @@ function submitNewScore(totScore, results){
     setCounter.innerHTML= totScore
     //change value on front end to score here
     return totScore
+    
 }
+
    
 function statsScores(games){
     sortedScores= games.sort(function(a, b){
