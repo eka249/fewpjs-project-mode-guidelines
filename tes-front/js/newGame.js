@@ -36,7 +36,7 @@ function initialRandomCards(cards){
         document.getElementById("container").removeChild(document.getElementById("container").lastChild)
     }
     //puts default 12 cards in the grid
-    // console.log(cards)
+    console.log("cards at initalrandomcards", cards)
     let cardTable = document.getElementById("container")
     // let allCardsUsed = []
     let selected = []
@@ -52,8 +52,7 @@ function initialRandomCards(cards){
         image.setAttribute("class", ".col-sm")
         image.onclick = e => {
             selected.push(imageCard)
-            console.log(selected)
-            threeClicks(e, selected)
+            threeClicks(e, selected, cards)
         }
         currentTwelve.push(cards.splice(cards[randCard],1))
         cardTable.appendChild(image)
@@ -65,17 +64,15 @@ function initialRandomCards(cards){
 //take selected.push out of addeventlistener
 //change threeclicks input
 
-function threeClicks(e, selected){
-    // console.log("selected")
-    // console.log(selected)
-    if (selected.length >= 3 ) {
-        determineValid(selected)
+function threeClicks(e,selected, cards){
+    if (selected.length >= 3) {
+        determineValid(selected, cards)
         selected = []
     }
     // else {console.log(selected.length)
     // }
 }
-function determineValid(selected){
+function determineValid(selected, cards){
     let a = selected[0]
     let b = selected[1]
     let c = selected[2]
@@ -121,19 +118,43 @@ function determineValid(selected){
         valid = true
         // console.log(valid)
     }
-    submitAttempt(valid, selected)
+    console.log(selected)
+    submitAttempt(valid, selected, cards)
+    
 }
 
-function submitAttempt(valid, results, selected){
-
+function submitAttempt(valid, selected, cards, results){
+//  console.log(selected)
     // console.log("results at submitattempt", results.id)
     if (valid === true){
         totScore= results.totScore + 1
         //remove the 3 selected cards
-        // cardToBeRemoved_1 = document.getElementById(`${selected[0].id}`)
-        // console.log(cardToBeRemoved_1)
-        // drawCards(cards)
+        cardToBeRemoved_1 = document.getElementById(`${selected[0].id}`)
+        cardToBeRemoved_2 = document.getElementById(`${selected[1].id}`)
+        cardToBeRemoved_3 = document.getElementById(`${selected[2].id}`)
+        console.log("card to be removed",cardToBeRemoved_1)
+        cardToBeRemoved_1.remove()
+        cardToBeRemoved_2.remove()
+        cardToBeRemoved_3.remove()
+        let cardTable = document.getElementById("container")
+        // let selected = []
+        let currentTwelve = []
+        for (i = 0; i < 3; i++) {
+            randCard = Math.floor(Math.random() * (cards.length))
+            let image = document.createElement("img")
+            let imageCard = cards[randCard]
+            image.src = imageCard.img
+            image.id = imageCard.id
+            image.setAttribute("class", ".col-sm")
+            image.onclick = e => {
+                selected.push(imageCard)
+                threeClicks(e, selected)
+            }
+            currentTwelve.push(cards.splice(cards[randCard],1))
+            cardTable.appendChild(image)
+            console.log(cards)
     }
+}
     else {
         totScore = results.totScore -1 
     }
@@ -142,9 +163,6 @@ function submitAttempt(valid, results, selected){
     submitNewScore(totScore, results)
 }
     
-function drawCards(cards){
-
-}
 
 
 function submitNewScore(totScore, results){
