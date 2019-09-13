@@ -12,7 +12,7 @@
 //     })
 // }
 
-// var cards
+
 // function fetchCards(){
 //     fetch("http://localhost:3000/cards")
 //     .then(response => response.json())
@@ -48,11 +48,15 @@
 //         document.getElementById("container").removeChild(document.getElementById("container").lastChild)
 //     }
 //     //puts default 12 cards in the grid
-//     let cardTable = document.getElementById("container")
+//     let cardTable = document.getElementById("container") 
+        //////^will be a conflict; figure out what I was doing
 //     // let allCardsUsed = []
 //     let selected = []
 //     let currentTwelve = []
+        
 //     for (i = 0; i < 12; i++) {
+    currentTwelve.push(cards.splice(Math.floor(Math.random() * (cards.length))))
+            }
 //         randCard = Math.floor(Math.random() * (cards.length))
 //         let image = document.createElement("img")
 //         let imageCard = cards[randCard]
@@ -129,6 +133,132 @@
 //     }
 //     // console.log(selected)
 //     submitAttempt(valid, selected, cards)
+document.addEventListener("DOMContentLoaded", main)
+
+function main(){
+    fetchCards()
+    pageButtons()
+    fetchGames()
+}
+
+function newGame(e){
+    e.preventDefault();
+    fetchCards()
+    fetch("http://localhost:3000/games" , {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            totScore:0
+        })
+    })
+    .then(response => response.json())
+    // .then(testscore=> console.log(testscore))
+    .then(results=> submitAttempt(0, results))
+
+}
+var cards
+function fetchCards(){
+    fetch("http://localhost:3000/cards")
+    .then(response => response.json())
+    .then(cards => initialRandomCards(cards))
+}
+
+
+function initialRandomCards(cards){
+    while (document.getElementById("container").hasChildNodes()){
+        document.getElementById("container").removeChild(document.getElementById("container").lastChild)
+    }
+    //puts default 12 cards in the grid
+    // console.log("cards at initalrandomcards", cards)
+    let cardTable = document.getElementById("container")
+    //what is the purpose of this addition?^
+    // let allCardsUsed = []
+    let selected = []
+    let currentTwelve = []
+
+    for (i = 0; i < 12; i++) {
+    currentTwelve.push(cards.splice(Math.floor(Math.random() * (cards.length))))
+    }
+    
+    for (i = 0; i < 12; i++) {
+        randomNumber = Math.floor(Math.random() * (cards.length))
+        let imageCard = cards[randomNumber]
+        currentTwelve.push(cards.splice(cards[randomNumber],1))
+        console.log(cards[randomNumber])
+        let image = document.createElement("img")
+        image.src = imageCard.img
+        image.id = imageCard.id
+        // console.log(image.id)
+        // console.log(imageCard.id)
+        image.setAttribute("class", ".col-sm")
+        image.onclick = e => {
+            selected.push(imageCard)
+            threeClicks(e, selected, cards)
+        }
+        
+        cardTable.appendChild(image)
+    }
+    console.log(cards)
+    console.log(currentTwelve)
+}
+
+
+//take selected.push out of addeventlistener
+//change threeclicks input
+
+function threeClicks(e,selected, cards){
+
+    if (selected.length >= 3) {
+        determineValid(selected, cards)
+        selected = []
+    }
+    // else {console.log(selected.length)
+    // }
+}
+function determineValid(selected, cards){
+    let a = selected[0]
+    let b = selected[1]
+    let c = selected[2]
+    let valid = null
+    let numberValid = null
+    let shapeValid = null
+    let shadingValid = null
+    let colorValid = null
+
+
+         
+    if (!((a.shape == b.shape) && (b.shape == c.shape) ||
+            (a.shape != b.shape) && (a.shape != c.shape) && (b.shape != c.shape))) {
+        shapeValid = false;
+        console.log(shapeValid)
+    } else {
+        shapeValid = true
+        console.log(shapeValid)
+    }
+    if (!((a.shading == b.shading) && (b.shading == c.shading) ||
+        (a.shading != b.shading) && (a.shading != c.shading) && (b.shading != c.shading))) {
+        shadingValid = false;
+        console.log(shadingValid)
+    } else {
+        shadingValid = true
+        console.log(shadingValid)
+    }
+    if (!((a.color == b.color) && (b.color == c.color) ||
+            (a.color != b.color) && (a.color != c.color) && (b.color != c.color))) {
+        colorValid = false;
+        console.log(colorValid)
+    } else {
+        colorValid = true
+        console.log(colorValid)
+    }
+    if ((numberValid == true) && (shapeValid == true) && (shadingValid == true) && (colorValid == true)) { 
+        valid = true
+        console.log(valid)
+    }
+    console.log(selected)
+    submitAttempt(valid, selected, cards)
     
 // }
 
