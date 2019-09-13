@@ -65,9 +65,10 @@ function initialRandomCards(cards){
 
 function threeClicks(e,selected, cards){
     if (selected.length == 3) {
-        determineValid(selected, cards)
-        selected = []
         console.log(selected)
+        determineValid(selected, cards)
+        // selected = []
+        
     }
     else {console.log(selected.length)
     }
@@ -136,8 +137,8 @@ function submitAttempt(valid, selected, cards){
         cardToBeRemoved_2.remove()
         cardToBeRemoved_3.remove()
         let cardTable = document.getElementById("container")
-        // let selected = []
-        let currentTwelve = []
+        selected = []
+        // let currentTwelve = []
         for (i = 0; i < 3; i++) {
             randCard = Math.floor(Math.random() * (cards.length))
             let image = document.createElement("img")
@@ -149,13 +150,16 @@ function submitAttempt(valid, selected, cards){
                 selected.push(imageCard)
                 threeClicks(e, selected)
             }
-            currentTwelve.push(cards.splice(cards[randCard],1))
+            // currentTwelve.push(
+                cards.splice(cards[randCard],1)
+                // )
             cardTable.appendChild(image)
             console.log(cards)
     }
 }
     else {
-        totScore = results.totScore -1 
+        totScore = results.totScore -1
+        selected = []
     }
     // console.log("totScore")
     // console.log(totScore)
