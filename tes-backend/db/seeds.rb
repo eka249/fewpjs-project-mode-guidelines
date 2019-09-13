@@ -99,6 +99,8 @@ Card.create(img:'/Users/ellyn/Development/Mod3/fewpjs-project-mode-guidelines/te
 Card.create(img:'/Users/ellyn/Development/Mod3/fewpjs-project-mode-guidelines/tes-backend/app/images/svg/icons/3srs.svg', number: 3, shading: so, color: re, shape: sq)
 
 
+User.create(name: "admin")
+
 
 
 # Card.create(img:'/Users/ellyn/Development/Mod3/fewpjs-project-mode-guidelines/tes-backend/app/images/svg/icons/1HgD.svg', number: 1, shading: st, color: gr, shape: di)

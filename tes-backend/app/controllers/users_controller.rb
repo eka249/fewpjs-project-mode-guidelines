@@ -14,7 +14,7 @@ class UsersController < ApplicationController
         @user = User.new(user_params)
         @user.name = User.name
         @user.save
-        render json => @user
+        render :json => @user
     end
 
     def delete
@@ -22,10 +22,11 @@ class UsersController < ApplicationController
         @user.destroy
     end
 
+
     private
 
     def user_params
-        params.require(:user).permit(:name => {})
+        params.require(:user).permit(:user)
     end
  
 

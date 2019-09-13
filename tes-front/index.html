@@ -5,13 +5,10 @@
 	<link rel="stylesheet" href='../tes-front/css/style.css'>
 	</head>
 
-    	<div class="top_header">
-		<!-- insert stats -->
-		</div>
-		<body>
 
-
+		
 				
+
 				
 				<!-- Trigger/Open The stats Modal -->
 				<button id="myBtn">The Stats</button>
@@ -35,22 +32,25 @@
 				
 				</div>
 
+			
+
 				<!-- Trigger/Open The endgame Modal -->
 				<button id="give-up">I Give Up</button> 
 				
 				<!-- The endgame Modal -->
-				<div id="end-modal" class="modal">
+				<div  id="end-modal" class="modal">
 
 					<!-- end Modal content -->
 					<div class="modal-content">
-							<div class="modal-header" id="end-modal-header">
-								<span class="close">&times;</span>
-								<h2> </h2>
+						<div class="modal-header" id="end-modal-header">
+								<span id="x" class="close">&times;</span>
+								<h2>Enter Your Name Here </h2>
 							</div>
 							<div class="modal-body" id="end-modal-body">
-								<p>GAME OVER</p>
-		
-								<p>Enter Your Name Here</p>
+								<form id="enter-name-form">
+									<input type="text" placeholder="Name goes here"/>
+									<input type="submit" id="name-input" />
+								</form>
 							</div>
 							<div class="modal-footer">
 								<h3>End Modal Footer</h3>
@@ -63,24 +63,19 @@
 
 
 
-
-
     <div class="container" id="game-controls">
 		<div id="menu" class= "sideBar">
-			<form id="form"><button type= "new" class="sideBar" 	id="newGame">New Game</button>
+			<form id="form"><button type= "new" class="sideBar" id="newGame">New Game</button>
 			</form>
 		</div>
 		
 		<div id= "score-and-time">
-			<li class= "sideBar" id= "setLabel">Sets:</li>
-			<li id= "setCounter"></li>
-			<li class= "sideBar" id= "setLabel">Strikes:</li>
-			<li id="strikes"></li>
+			<label for id="setCounter">Sets: </label>
+			<p id= "setCounter"></p>
+			<label for id="setCounter">Strikes: </label>
+			<p id= "strikes"></p>
 		</div>
-		
-		<div id="resetGame"></div>
-			<button id="iGiveUp"></button>
-		</div>
+
 	<!-- <div class= "card-table" id="set_form"> -->
 	<div class="grid-container" id= "container">
 		

@@ -4,10 +4,13 @@ function main(){
     // fetchCards()
     pageButtons()
     // fetchGames()
+    // fetchUsers()
     let newButton= document.getElementById("newGame")
     newButton.addEventListener("click", e => {
         newGame(e)
     })
+
+   
 }
 let strike=0
 let currentScore= 1
@@ -18,6 +21,8 @@ let currentScore= 1
 //     .then(response => response.json())
 //     .then(games => statsScores(games))
 // }
+
+
 
 function newGame(e){
     e.preventDefault();
@@ -32,9 +37,10 @@ function newGame(e){
     })
     .then(response => response.json())
     // .then(game => addGameToGameCards(game))
+    .then (results => console.log("first fetch results"))
     // .then(results=> console.log(results))
-    .then(results=> submitAttempt(0, results))
-    .then(results=> addCardToCardGames(0, results))
+    // .then(results=> submitAttempt(0, results))
+    // .then(results=> addCardToCardGames(0, results))
     // .then(initialRandomCards(cards)))
     fetchCards()
     //////why do results not persist??? they are present here but not in later functions
@@ -161,7 +167,7 @@ function submitAttempt(valid, selected, cards, results){
             cardToBeRemoved_1 = document.getElementById(`${selected[0].id}`)
             cardToBeRemoved_2 = document.getElementById(`${selected[1].id}`)
             cardToBeRemoved_3 = document.getElementById(`${selected[2].id}`)
-            console.log("card to be removed",cardToBeRemoved_1)
+            // console.log("card to be removed",cardToBeRemoved_1)
             cardToBeRemoved_1.remove()
             cardToBeRemoved_2.remove()
             cardToBeRemoved_3.remove()
@@ -246,18 +252,19 @@ function statsScores(results){
     //too tired to find the corresponding players right now
 }
 
+    
 
 function pageButtons(){
 
     //USER MODAL
     // Get the modal
     var endModal = document.getElementById("end-modal")
-
     // Get the button that opens the modal
     let endBtn= document.getElementById("give-up")
 
     // Get the <span> element that closes the modal
-    var span1 = document.getElementsByClassName("close")[0];
+    var span = document.getElementsByClassName("close")[0];
+    var span1 = document.getElementById("x")
 
     // When the user clicks the button, open the modal 
     
@@ -265,23 +272,17 @@ function pageButtons(){
     endModal.style.display = "block";
     }
 
+
     //What is in the modal
     var endContent = document.getElementById("end-modal-body")
-    // endContent.textContent= games.id.totScore
 
     // When the user clicks on <span> (x), close the modal
     span1.onclick = function() {
     endModal.style.display = "none";
     }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == endModal) {
-          endModal.style.display = "none";
-        }
-    }
     // let gameMenu= document.getElementById("menu")
 
+///////////////////////////////////////////////////////////////////
     ///STATS MODAL
     // Get the modal
     var modal = document.getElementById("myModal");
@@ -300,7 +301,12 @@ function pageButtons(){
 
     //What is in the modal
     var content = document.getElementById("modal-body")
-    content.innerText= "test"
+    ///add stats
+    // function insertIntoStatsModal(){
+    //     let body= document.getElementById("modal-header")
+    //     let testInsert= document.createElement(div)
+    //     testInsert.innertext= "hey this is a test"
+    // }
     //figure out how to show this in text
 
     // When the user clicks on <span> (x), close the modal
@@ -313,8 +319,64 @@ function pageButtons(){
         if (event.target == modal) {
           modal.style.display = "none";
         }
+        else if (event.target == endModal){
+            endModal.style.display = "none"
+        }
     }
 }
+///////////////////////////////////////////////////////////////////
+
+
+
+
+function addUser(user){
+    let enterName= document.getElementById("enter-name-form")
+    // let nameInput= document.getElementById("name-input")
+    // enterName.appendChild(nameInput)
+    enterName.onsubmit = (e) => {
+        establishUser(e)
+    }
+}
+
+function fetchUsers(e){
+    // fetch("http://localhost:3000/users")
+    // .then(response => response.json())
+    // .then(user => establishUser(user, e))
+
+
+    
+    // .then(name => console.log(name))
+
+    fetch(`http://localhost:3000/users`,{
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            
+            user: e[0].name
+        })
+
+    }).then(resp=>resp.json())
+    .then(results => console.log(results))
+}
+
+// function establishUser(e){
+    
+//     fetch(`http://localhost:3000/users`,{
+//         method: "POST",
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+            
+//             user: e[0].name
+//         })
+
+//     }).then(resp=>resp.json())
+//     .then(results => console.log(results))
+// }
+
 
 
 
