@@ -8,20 +8,18 @@ function main(){
 
 function newGame(e){
     e.preventDefault();
+    fetchCards()
     fetch("http://localhost:3000/games" , {
         method: "POST",
         headers: {
-        //    'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             totScore:0
         })
     })
-    .then(response => response.json()
-    )
+    .then(response => response.json())
     // .then(testscore=> console.log(testscore))
-    //how do we connect current game with gameplay-question for after gameplay is over
     .then(results=> submitAttempt(0, results))
 
 }
@@ -34,6 +32,9 @@ function fetchCards(){
 
 
 function initialRandomCards(cards){
+    while (document.getElementById("container").hasChildNodes()){
+        document.getElementById("container").removeChild(document.getElementById("container").lastChild)
+    }
     //puts default 12 cards in the grid
     console.log("cards at initalrandomcards", cards)
     let cardTable = document.getElementById("container")
@@ -64,14 +65,13 @@ function initialRandomCards(cards){
 //change threeclicks input
 
 function threeClicks(e,selected, cards){
-    if (selected.length == 3) {
-        console.log(selected)
+
+    if (selected.length >= 3) {
         determineValid(selected, cards)
-        // selected = []
-        
+        selected = []
     }
-    else {console.log(selected.length)
-    }
+    // else {console.log(selected.length)
+    // }
 }
 function determineValid(selected, cards){
     let a = selected[0]
@@ -82,52 +82,53 @@ function determineValid(selected, cards){
     let shapeValid = null
     let shadingValid = null
     let colorValid = null
-    if (!((a.number == b.number) && (b.number == c.number) ||
-            (a.number != b.number) && (a.number != c.number) && (b.number != c.number))) {
+
+
+            if (!((a == b) && (b == c) ||
+            (a != b) && (a != c) && (b != c))) {
         numberValid = false;
-        console.log(numberValid)
-    } else {
+        // console.log(numberValid)
+        } else {
         numberValid = true
-        console.log(numberValid)
-    }
+        }
     if (!((a.shape == b.shape) && (b.shape == c.shape) ||
             (a.shape != b.shape) && (a.shape != c.shape) && (b.shape != c.shape))) {
         shapeValid = false;
         console.log(shapeValid)
     } else {
         shapeValid = true
-        console.log(shapeValid)
+        // console.log(shapeValid)
     }
     if (!((a.shading == b.shading) && (b.shading == c.shading) ||
         (a.shading != b.shading) && (a.shading != c.shading) && (b.shading != c.shading))) {
         shadingValid = false;
-        console.log(shadingValid)
+        // console.log(shadingValid)
     } else {
         shadingValid = true
-        console.log(shadingValid)
+        // console.log(shadingValid)
     }
     if (!((a.color == b.color) && (b.color == c.color) ||
             (a.color != b.color) && (a.color != c.color) && (b.color != c.color))) {
         colorValid = false;
-        console.log(colorValid)
+        // console.log(colorValid)
     } else {
         colorValid = true
-        console.log(colorValid)
+        // console.log(colorValid)
     }
     if ((numberValid == true) && (shapeValid == true) && (shadingValid == true) && (colorValid == true)) { 
         valid = true
-        console.log(valid)
+        // console.log(valid)
     }
     console.log(selected)
     submitAttempt(valid, selected, cards)
     
 }
 
-function submitAttempt(valid, selected, cards){
- console.log(selected)
+function submitAttempt(valid, selected, cards, results){
+//  console.log(selected)
     // console.log("results at submitattempt", results.id)
     if (valid === true){
-        // totScore++
+        totScore= results.totScore + 1
         //remove the 3 selected cards
         cardToBeRemoved_1 = document.getElementById(`${selected[0].id}`)
         cardToBeRemoved_2 = document.getElementById(`${selected[1].id}`)
@@ -169,8 +170,8 @@ function submitAttempt(valid, selected, cards){
 
 
 function submitNewScore(totScore, results){
-    // console.log("the id of item to fetch")
-    // console.log(results.id)
+    console.log("the id of item to fetch")
+    console.log(results.id)
     fetch(`http://localhost:3000/games/${results.id}`, {
         method: "PATCH",
         headers: {
@@ -182,6 +183,7 @@ function submitNewScore(totScore, results){
     })
     let setCounter= document.getElementById("setCounter")
     setCounter.innerHTML= totScore
+    fetchGames()
     //change value on front end to score here
     return totScore
     
@@ -203,36 +205,16 @@ function fetchGames(){
 }
 
 function statsScores(games){
+    // console.log(games)
     sortedScores= games.sort(function(a, b){
-    return a.totScore - b.totScore;
+    return parseFloat(a.totScore) - parseFloat(b.totScore);
     });
-    // maxScores= sortedScores[0..5]
+    let highScores= games.sort(function(a, b) {return a.totScore < b.totScore ? 1 : -1; })
+    .slice(0, 10);
+    // console.log(highScores)
+    highScores
     //too tired to find the corresponding players right now
 }
-
-
-////////////backup loop code
-// while (cardArr.length < 4){
-//     //assign all coordinates in findCard function
-//     randCard= Math.floor(Math.random() * (cards.length))
-//     // console.log(randCard)
-//     // console.log(cards[randCard].img)
-//     if (!cardArr.includes(randCard)){
-//         let image = document.createElement("img")
-//         image.src = cards[randCard].img
-//         // image.setAttribute([idCounter])
-//         image.addEventListener("click", e => {
-//             // console.log("click working")
-//             selected.push(cards[randCard])
-//             threeClicks(e, cards)
-//         })
-//         row1.appendChild(image)
-//         cardArr.push(cards[randCard])
-//         // console.log(cardArr)
-//         // console.log(selected)
-//     }
-//     break
-// }
 
 
 function pageButtons(){
@@ -242,17 +224,8 @@ function pageButtons(){
     newButton.addEventListener("click", e => {
         newGame(e)
     })
-    
 
-    
-
-
-    //"sets:" inner text
-    //display counter data
-    //timer as a stretch goal
-
-
-
+    ///STATS MODAL
     // Get the modal
     var modal = document.getElementById("myModal");
 
@@ -269,7 +242,7 @@ function pageButtons(){
 
     //What is in the modal
     var content = document.getElementById("modal-header")
-    // content.innerText= scoresStats()
+    // content.innerText= statsScores()
     //figure out how to show this in text
 
     // When the user clicks on <span> (x), close the modal
@@ -284,3 +257,44 @@ function pageButtons(){
         }
     }
 } 
+
+
+////USER MODAL
+    // Get the modal
+//     var modal = document.getElementById("myModal");
+
+//     // Get the button that opens the modal
+//     var btn = document.getElementById("myBtn");
+
+//     // Get the <span> element that closes the modal
+//     var span = document.getElementsByClassName("close")[0];
+
+//     // When the user clicks the button, open the modal 
+//     btn.onclick = function() {
+//     modal.style.display = "block";
+//     }
+
+//     //What is in the modal
+//     var content = document.getElementById("modal-header")
+//     // content.innerText= statsScores()
+//     //figure out how to show this in text
+
+//     // When the user clicks on <span> (x), close the modal
+//     span.onclick = function() {
+//     modal.style.display = "none";
+//     }
+
+//     // When the user clicks anywhere outside of the modal, close it
+//     window.onclick = function(event) {
+//         if (event.target == modal) {
+//           modal.style.display = "none";
+//         }
+//     }
+// } 
+
+
+
+
+
+
+

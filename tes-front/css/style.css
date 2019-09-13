@@ -76,8 +76,6 @@
   grid-template-columns: auto auto auto auto;
   grid-template-rows: auto auto auto;
   grid-gap: 5px;
-  
-  /* background-color: #b1eac6F3; */
   padding: 5px;
 }
 
