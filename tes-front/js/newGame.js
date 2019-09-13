@@ -36,15 +36,22 @@ function initialRandomCards(cards){
         document.getElementById("container").removeChild(document.getElementById("container").lastChild)
     }
     //puts default 12 cards in the grid
-    console.log("cards at initalrandomcards", cards)
+    // console.log("cards at initalrandomcards", cards)
     let cardTable = document.getElementById("container")
     // let allCardsUsed = []
     let selected = []
     let currentTwelve = []
+
     for (i = 0; i < 12; i++) {
-        randCard = Math.floor(Math.random() * (cards.length))
+    currentTwelve.push(cards.splice(Math.floor(Math.random() * (cards.length))))
+    }
+    
+    for (i = 0; i < 12; i++) {
+        randomNumber = Math.floor(Math.random() * (cards.length))
+        let imageCard = cards[randomNumber]
+        currentTwelve.push(cards.splice(cards[randomNumber],1))
+        console.log(cards[randomNumber])
         let image = document.createElement("img")
-        let imageCard = cards[randCard]
         image.src = imageCard.img
         image.id = imageCard.id
         // console.log(image.id)
@@ -54,10 +61,11 @@ function initialRandomCards(cards){
             selected.push(imageCard)
             threeClicks(e, selected, cards)
         }
-        currentTwelve.push(cards.splice(cards[randCard],1))
+        
         cardTable.appendChild(image)
     }
     console.log(cards)
+    console.log(currentTwelve)
 }
 
 
@@ -84,40 +92,34 @@ function determineValid(selected, cards){
     let colorValid = null
 
 
-            if (!((a == b) && (b == c) ||
-            (a != b) && (a != c) && (b != c))) {
-        numberValid = false;
-        // console.log(numberValid)
-        } else {
-        numberValid = true
-        }
+         
     if (!((a.shape == b.shape) && (b.shape == c.shape) ||
             (a.shape != b.shape) && (a.shape != c.shape) && (b.shape != c.shape))) {
         shapeValid = false;
         console.log(shapeValid)
     } else {
         shapeValid = true
-        // console.log(shapeValid)
+        console.log(shapeValid)
     }
     if (!((a.shading == b.shading) && (b.shading == c.shading) ||
         (a.shading != b.shading) && (a.shading != c.shading) && (b.shading != c.shading))) {
         shadingValid = false;
-        // console.log(shadingValid)
+        console.log(shadingValid)
     } else {
         shadingValid = true
-        // console.log(shadingValid)
+        console.log(shadingValid)
     }
     if (!((a.color == b.color) && (b.color == c.color) ||
             (a.color != b.color) && (a.color != c.color) && (b.color != c.color))) {
         colorValid = false;
-        // console.log(colorValid)
+        console.log(colorValid)
     } else {
         colorValid = true
-        // console.log(colorValid)
+        console.log(colorValid)
     }
     if ((numberValid == true) && (shapeValid == true) && (shadingValid == true) && (colorValid == true)) { 
         valid = true
-        // console.log(valid)
+        console.log(valid)
     }
     console.log(selected)
     submitAttempt(valid, selected, cards)
