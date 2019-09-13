@@ -334,17 +334,14 @@ function addUser(user){
     // let nameInput= document.getElementById("name-input")
     // enterName.appendChild(nameInput)
     enterName.onsubmit = (e) => {
-        establishUser(e)
+        fetchUsers(e)
     }
 }
 
 function fetchUsers(e){
     // fetch("http://localhost:3000/users")
     // .then(response => response.json())
-    // .then(user => establishUser(user, e))
-
-
-    
+    // .then(user => establishUser(user, e))    
     // .then(name => console.log(name))
 
     fetch(`http://localhost:3000/users`,{
@@ -376,8 +373,6 @@ function fetchUsers(e){
 //     }).then(resp=>resp.json())
 //     .then(results => console.log(results))
 // }
-
-
 
 
 
