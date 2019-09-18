@@ -19,69 +19,88 @@ function newGame(e){
         })
     })
     .then(response => response.json())
-    // .then(testscore=> console.log(testscore))
     .then(results=> submitAttempt(0, results))
-
 }
-var cards
+
 function fetchCards(){
     fetch("http://localhost:3000/cards")
     .then(response => response.json())
-    .then(cards => initialRandomCards(cards))
+    .then(cards => deckOfCards(cards, [], []))
+}
+function deckOfCards(cards, currentCards, usedCards){
+    initialRandomCards(cards, currentCards, usedCards)
 }
 
-
-function initialRandomCards(cards){
+function initialRandomCards(cards, currentCards, usedCards){
     while (document.getElementById("container").hasChildNodes()){
         document.getElementById("container").removeChild(document.getElementById("container").lastChild)
     }
-    //puts default 12 cards in the grid
-    // console.log("cards at initalrandomcards", cards)
     let cardTable = document.getElementById("container")
-    // let allCardsUsed = []
     let selected = []
-    let currentTwelve = []
-
-    for (i = 0; i < 12; i++) {
-    currentTwelve.push(cards.splice(Math.floor(Math.random() * (cards.length))))
+     console.log(usedCards)
+    if (cards.length > 0){
+        while (currentCards.length < 12){
+            let randomNumber = Math.floor(Math.random() * (cards.length))
+            let card = cards.splice(randomNumber,1)
+            currentCards.push(card)
+        } 
+    } else { 
+        alert("There are no more cards in the deck!")
     }
     
-    for (i = 0; i < 12; i++) {
-        randomNumber = Math.floor(Math.random() * (cards.length))
-        let imageCard = cards[randomNumber]
-        currentTwelve.push(cards.splice(cards[randomNumber],1))
-        console.log(cards[randomNumber])
+    currentCards.forEach(card => {
         let image = document.createElement("img")
-        image.src = imageCard.img
-        image.id = imageCard.id
-        // console.log(image.id)
-        // console.log(imageCard.id)
+        image.src = card[0].img
+        image.id = card[0].id
         image.setAttribute("class", ".col-sm")
         image.onclick = e => {
-            selected.push(imageCard)
-            threeClicks(e, selected, cards)
+            if (!selected.includes(card[0])){
+                image.style.border="5px solid green"
+                selected.push(card[0])
+                console.log(selected.length)
+                threeClicks(selected, cards, currentCards, usedCards)
+            } else {
+                image.style.border=null
+                selected = selected.filter(c => c !== card[0])
+                console.log(selected)
+            }
+                
+            
         }
-        
         cardTable.appendChild(image)
+    })
+    
+    if (document.getElementById("moreButton") == null){
+        let moreCardsButton = document.createElement("button")
+        moreCardsButton.id = "moreButton"
+        moreCardsButton.textContent = "More Cards"
+        let gameMenu = document.getElementById("menu")
+        gameMenu.appendChild(moreCardsButton)
+        moreCardsButton.onclick = () => {
+            if (cards.length > 0){
+                for (i=0; i<3; i++){
+                let randomNumber = Math.floor(Math.random() * (cards.length))
+                let card = cards.splice(randomNumber,1)
+                currentCards.push(card)
+                }
+            } else {
+                alert("There are no more cards in the deck!")
+                console.log("cards remaining in deck", cards)
+            }
+            console.log("cards on table", currentCards.length)
+            console.log("cards remaining in deck", cards.length)
+            initialRandomCards(cards, currentCards, usedCards)
+        }
     }
-    console.log(cards)
-    console.log(currentTwelve)
 }
 
-
-//take selected.push out of addeventlistener
-//change threeclicks input
-
-function threeClicks(e,selected, cards){
-
-    if (selected.length >= 3) {
-        determineValid(selected, cards)
-        selected = []
+function threeClicks(selected, cards, currentCards, usedCards){
+    if (selected.length == 3) {
+        determineValid(selected, cards, currentCards, usedCards) 
     }
-    // else {console.log(selected.length)
-    // }
 }
-function determineValid(selected, cards){
+
+function determineValid(selected, cards, currentCards, usedCards){
     let a = selected[0]
     let b = selected[1]
     let c = selected[2]
@@ -91,85 +110,110 @@ function determineValid(selected, cards){
     let shadingValid = null
     let colorValid = null
 
-
-         
+    if (!((a.number == b.number) && (b.number == c.number) ||
+            (a.number != b.number) && (a.number != c.number) && (b.number != c.number))) {
+        numberValid = false;
+        // alert("Invalid Set: Numbers are not all the same or all different!")
+        console.log(numberValid)
+    } else {
+        numberValid = true
+        console.log(numberValid)
+    }     
     if (!((a.shape == b.shape) && (b.shape == c.shape) ||
             (a.shape != b.shape) && (a.shape != c.shape) && (b.shape != c.shape))) {
         shapeValid = false;
-        console.log(shapeValid)
+        // alert("Invalid Set: Shapes are not all the same or all different!")
+        // console.log(shapeValid)
     } else {
         shapeValid = true
-        console.log(shapeValid)
+        // console.log(shapeValid)
     }
     if (!((a.shading == b.shading) && (b.shading == c.shading) ||
         (a.shading != b.shading) && (a.shading != c.shading) && (b.shading != c.shading))) {
         shadingValid = false;
-        console.log(shadingValid)
+        // alert("Invalid Set: Shades are not all the same or all different!")
+        // console.log(shadingValid)
     } else {
         shadingValid = true
-        console.log(shadingValid)
+        // console.log(shadingValid)
     }
     if (!((a.color == b.color) && (b.color == c.color) ||
             (a.color != b.color) && (a.color != c.color) && (b.color != c.color))) {
         colorValid = false;
-        console.log(colorValid)
+        // alert("Invalid Set: Colors are not all the same or all different!")
+        // console.log(colorValid)
     } else {
         colorValid = true
-        console.log(colorValid)
+        // console.log(colorValid)
     }
     if ((numberValid == true) && (shapeValid == true) && (shadingValid == true) && (colorValid == true)) { 
         valid = true
         console.log(valid)
+    } else {
+        alert("Invalid Set!")
     }
-    console.log(selected)
-    submitAttempt(valid, selected, cards)
-    
+    submitAttempt(valid, selected, cards, currentCards, usedCards) 
 }
 
-function submitAttempt(valid, selected, cards, results){
-//  console.log(selected)
-    // console.log("results at submitattempt", results.id)
+function submitAttempt(valid, selected, cards, currentCards, usedCards, results){
     if (valid === true){
-        totScore= results.totScore + 1
-        //remove the 3 selected cards
-        cardToBeRemoved_1 = document.getElementById(`${selected[0].id}`)
-        cardToBeRemoved_2 = document.getElementById(`${selected[1].id}`)
-        cardToBeRemoved_3 = document.getElementById(`${selected[2].id}`)
-        console.log("card to be removed",cardToBeRemoved_1)
+        cardToBeRemoved_1 = document.getElementById(selected[0].id)
+        cardToBeRemoved_2 = document.getElementById(selected[1].id)
+        cardToBeRemoved_3 = document.getElementById(selected[2].id)
         cardToBeRemoved_1.remove()
         cardToBeRemoved_2.remove()
         cardToBeRemoved_3.remove()
-        let cardTable = document.getElementById("container")
-        selected = []
-        // let currentTwelve = []
-        for (i = 0; i < 3; i++) {
-            randCard = Math.floor(Math.random() * (cards.length))
-            let image = document.createElement("img")
-            let imageCard = cards[randCard]
-            image.src = imageCard.img
-            image.id = imageCard.id
-            image.setAttribute("class", ".col-sm")
-            image.onclick = e => {
-                selected.push(imageCard)
-                threeClicks(e, selected)
+        for (x=0; x<selected.length; x++){
+            for (y=0; y<currentCards.length; y++) {
+                if (selected[x].id == currentCards[y][0].id){
+                    currentCards.splice(y, 1)
+                }
             }
-            // currentTwelve.push(
-                cards.splice(cards[randCard],1)
-                // )
-            cardTable.appendChild(image)
-            console.log(cards)
-    }
-}
-    else {
-        totScore = results.totScore -1
+        }
+        
+        usedCards.push(selected)
+        
+        console.log(usedCards)
+        if (document.getElementById("foundButton") == null){
+            foundButton = document.createElement("button")
+            foundButton.id = "foundButton"
+            let gameMenu = document.getElementById("menu")
+            gameMenu.appendChild(foundButton)
+            foundButton.textContent = "Show Found Sets"
+            foundButton.value = false
+            console.log(foundButton.value)
+            setsFound = document.getElementById("found")
+            foundButton.onclick = () => {
+                if(foundButton.textContent == "Show Found Sets"){
+                    foundButton.textContent = "Hide Found Sets"
+                    while (setsFound.hasChildNodes()){
+                    setsFound.removeChild(setsFound.lastChild)
+                    }
+                    usedCards.forEach(innerArray=> {
+                        console.log(innerArray)
+                        innerArray.forEach(c=> {
+                            console.log(c)
+                            let img = document.createElement("img")
+                            img.src = c.img
+                            setsFound.appendChild(img)
+                        })    
+                    })
+                } else if (foundButton.textContent = "Hide Found Sets"){
+                    foundButton.textContent = "Show Found Sets"
+                    while (setsFound.hasChildNodes()){
+                        setsFound.removeChild(setsFound.lastChild)
+                        }
+                }
+            }
+        }
         selected = []
+        initialRandomCards(cards, currentCards, usedCards)
+    } else {
+        selected = []
+        console.log("failed validity")
+        initialRandomCards(cards, currentCards, usedCards)
     }
-    // console.log("totScore")
-    // console.log(totScore)
-    submitNewScore(totScore, results)
 }
-    
-
 
 function submitNewScore(totScore, results){
     console.log("the id of item to fetch")
@@ -184,11 +228,10 @@ function submitNewScore(totScore, results){
         })
     })
     let setCounter= document.getElementById("setCounter")
-    setCounter.innerHTML= totScore
+    setCounter.innerHTML = totScore
     fetchGames()
     //change value on front end to score here
-    return totScore
-    
+    return totScore   
 }
 
    
@@ -220,9 +263,11 @@ function statsScores(games){
 
 
 function pageButtons(){
-    let gameMenu= document.getElementById("menu")
-    let newButton= document.getElementById("newGame")
-    newButton.innerText= "New Game!"
+    let gameMenu = document.getElementById("menu")
+    let newButton = document.getElementById("newGame")
+
+
+    newButton.innerText = "New Game!"
     newButton.addEventListener("click", e => {
         newGame(e)
     })
